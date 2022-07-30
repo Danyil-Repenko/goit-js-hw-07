@@ -1,7 +1,7 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-
 const gallery = document.querySelector('.gallery');
+
 
 function galleryItemsMarkup(arrayOfItems) {
     return arrayOfItems.map(({ preview, original, description }) => {
@@ -16,29 +16,30 @@ function galleryItemsMarkup(arrayOfItems) {
             </a>
         </div>`
     }).join('');
-}
+};
 
 const insertGalleryItems = arrayOfItems => {
     const markup = galleryItemsMarkup(arrayOfItems);
     gallery.innerHTML = markup;
-}
+};
 
 insertGalleryItems(galleryItems);
 
-gallery.addEventListener('click', onImageClick)
+gallery.addEventListener('click', onImageClick);
+let instance;
 
 function onImageClick(event) {
+    event.preventDefault();
     if (event.target.nodeName !== "IMG") {
         return;
     }
     const link = event.target.dataset.source;
-}
+    instance = basicLightbox.create(`<img src="${link}"/>`);
+    instance.show();
+};
 
-const preventDefaultLinkBehavior = (ansestor) => {
-    const linksArray = ansestor.querySelectorAll('a');
-    return linksArray.forEach(link => {
-        link.addEventListener('click', event => event.preventDefault())
-    })
-}
-
-preventDefaultLinkBehavior(gallery);
+document.addEventListener("keydown", event => {
+    if (event.code === "Escape") {
+        instance.close();
+    }
+});
