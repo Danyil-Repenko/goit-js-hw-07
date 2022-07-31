@@ -18,19 +18,4 @@ const insertGalleryItems = arrayOfItems => {
 
 insertGalleryItems(galleryItems);
 
-gallery.addEventListener('click', onImageClick)
-
-function onImageClick(event) {
-    if (event.target.nodeName !== "IMG") {
-        return;
-    }
-}
-
-const preventDefaultLinkBehavior = (ansestor) => {
-    const linksArray = ansestor.querySelectorAll('a');
-    return linksArray.forEach(link => {
-        link.addEventListener('click', event => event.preventDefault())
-    })
-}
-
-preventDefaultLinkBehavior(gallery);
+const galleryLightBox = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
